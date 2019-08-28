@@ -10,6 +10,11 @@ const allUserTemplate = (user) =>
     		<i class="friendAddBtn"></i>
     		친구 추가
     	</button>
+    	<button class="start-messenger" aria-label="${user.name}님과 메신저" type="button">
+            <i class="friendAddBtn"></i>
+            메신저
+    	</button>
+</button>
     </div>
 </div>
 `

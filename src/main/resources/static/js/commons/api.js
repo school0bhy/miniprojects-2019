@@ -19,7 +19,7 @@ const api = {
 }
 
 const formDataApi = {
-    POST: (url, data) => fetch('/api/posts', {
+    POST: (url, data) => fetch(url, {
         method: 'POST',
         enctype: "multipart/form-data",
         body: data

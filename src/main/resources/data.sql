@@ -18,3 +18,10 @@ INSERT INTO comment(contents, user_id, post_id, created_at, updated_at) VALUES (
 
 INSERT INTO comment(contents, user_id, post_id, parent_id) VALUES ('comment4', 1, 1, 1);
 INSERT INTO comment(contents, user_id, post_id, parent_id) VALUES ('comment5', 1, 1, 1);
+
+
+INSERT INTO user (id, email, name, password) VALUES (100, 'a@a', 'ch1', '1234');
+INSERT INTO user (id, email, name, password) VALUES (101, 'b@b', 'ch2', '1234');
+INSERT INTO messenger_room(id) VALUES (1);
+INSERT INTO messenger(id, messenger_room_id, user_id) VALUES (1, 1, 100);
+INSERT INTO messenger(id, messenger_room_id, user_id) VALUES (2, 1, 101);

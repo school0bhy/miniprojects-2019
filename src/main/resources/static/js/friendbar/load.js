@@ -11,6 +11,7 @@ const friendBarModule = (function () {
                     createUserDOM(data[i])
                 }
                 addFriendsAskButtonClickListener()
+                addChatStartButtonClickListener()
             })
     }
 
@@ -50,6 +51,56 @@ const friendBarModule = (function () {
 		}
 	}
 
+	function addChatStartButtonClickListener() {
+        const userList = document.getElementById('all-user-list')
+        userList.addEventListener('click',  function (event) {
+            const startMessengerButton = event.target.closest('button')
+            if (startMessengerButton != null && startMessengerButton.classList.contains('start-messenger')) {
+                console.log('-----------------')
+                const ids = new Set([startMessengerButton.closest('div.btn-group').dataset.id]);
+                console.log(ids)
+                const messengerRequest = {"userIds" : ids}
+
+                api.POST("/messenger", messengerRequest)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw response;
+                        }
+                        return response.text();
+                    })
+                    .then(roomId => {
+                        window.location.href = '/messenger/' + roomId;
+                    })
+                    .catch(errorResponse =>
+                        console.log(errorResponse)
+                    )
+            }
+        })
+    }
+
+    function startMessenger(event) {
+        console.log("hi")
+        const startMessengerButton = event.target.closest('button')
+        if (startMessengerButton != null && startMessengerButton.classList.contains('start-messenger')) {
+            console.log("hiii")
+            const id = new Set([startMessengerButton.closest('div').closest('div').dataset.id]);
+
+            api.POST("/messenger", id)
+                .then(response => {
+                    if (!response.ok) {
+                        throw response;
+                    }
+                    return response.text();
+                })
+                .then(roomId => {
+                    window.location.href = '/messenger/' + roomId;
+                })
+                .catch(errorResponse =>
+                    console.log(errorResponse)
+                )
+        }
+    }
+
 	async function addFriendsRemoveBtnClickListener() {
 		const btns = document.getElementsByClassName('FriendRemove')
 		for(let i = 0; i < btns.length; i++) {
@@ -70,22 +121,22 @@ const friendBarModule = (function () {
 	}
 
     function preventDropdownHide() {
-        $('div.btn-group.dropleft').on('click', function (event) {
-            let events = $._data(document, 'events') || {}
-            events = events.click || []
-            for (let i = 0; i < events.length; i++) {
-                if (events[i].selector) {
-                    if ($(event.target).is(events[i].selector)) {
-                        events[i].handler.call(event.target, event)
-                    }
-
-                    $(event.target).parents(events[i].selector).each(function () {
-                        events[i].handler.call(this, event)
-                    })
-                }
-            }
-            event.stopPropagation()
-        })
+        // $('div.btn-group.dropleft').on('click', function (event) {
+        //     let events = $._data(document, 'events') || {}
+        //     events = events.click || []
+        //     for (let i = 0; i < events.length; i++) {
+        //         if (events[i].selector) {
+        //             if ($(event.target).is(events[i].selector)) {
+        //                 events[i].handler.call(event.target, event)
+        //             }
+        //
+        //             $(event.target).parents(events[i].selector).each(function () {
+        //                 events[i].handler.call(this, event)
+        //             })
+        //         }
+        //     }
+        //     event.stopPropagation()
+        // })
     }
 
     return {
